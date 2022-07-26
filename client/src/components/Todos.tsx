@@ -85,7 +85,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         })
       })
     } catch(err) {
-      alert(`Todo Edit failed ${(JSON.stringify(err))}`)
+      alert('Todo Edit failed')
     }
   }
 
