@@ -67,21 +67,28 @@ export class TodosAccess {
 
       async updateTodo(todoUpdate: TodoUpdate, todoId: string, userId: string): Promise<TodoUpdate> {
           const { name, dueDate, done } = todoUpdate;
-        await this.docClient.update({
-          TableName: this.todosTable,
-          Key: {
-             todoId, userId
-        },
-        UpdateExpression : "SET name = :name, dueDate = :dueDate, done = :done ",
-          ExpressionAttributeValues: {
-            ":name": name,
-            ":dueDate": dueDate,
-            ":done": done
-        },
-        ReturnValues: "UPDATED_NEW"
-
-        }).promise()
-        return todoUpdate
+          logger.info(`Updating TODOs {name, dueDate, done}: ${name}, ${dueDate}, ${done}`)
+          try{
+            await this.docClient.update({
+                TableName: this.todosTable,
+                Key: {
+                   todoId, userId
+              },
+              UpdateExpression : "SET name = :name, dueDate = :dueDate, done = :done ",
+                ExpressionAttributeValues: {
+                  ":name": name,
+                  ":dueDate": dueDate,
+                  ":done": done
+              },
+              ReturnValues: "UPDATED_NEW"
+      
+              }).promise();
+              logger.info('TODO UPDATE HAPPENED SUCCESSFULLY')
+              return todoUpdate
+          } catch(err) {
+            logger.info(`ERROR UPDATING TODO ${(err as Error).message}`)
+          }
+        
       }
 }
 
