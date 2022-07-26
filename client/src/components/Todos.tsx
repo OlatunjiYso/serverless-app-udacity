@@ -84,8 +84,8 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
           [pos]: { done: { $set: !todo.done } }
         })
       })
-    } catch {
-      alert('Todo deletion failed')
+    } catch(err) {
+      alert(`Todo Edit failed ${(JSON.stringify(err))}`)
     }
   }
 
@@ -97,7 +97,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
         loadingTodos: false
       })
     } catch (e) {
-      alert(`Failed to fetch todos: ${e.message}`)
+      alert(`Failed to fetch todos: ${(e as Error).message}`)
     }
   }
 
