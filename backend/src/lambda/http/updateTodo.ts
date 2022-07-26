@@ -13,12 +13,12 @@ export const handler = middy(
     const todoId = event.pathParameters.todoId;
     const userId = getUserId(event);
     const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
-    const { name, dueDate, done } = updatedTodo;
-      if(!dueDate || !name || !done) {
+    const { name, dueDate } = updatedTodo;
+      if(!dueDate || !name) {
         return {
           statusCode: 400,
           body: JSON.stringify({
-            message: 'Name or dueDate or done cannot be null'
+            message: 'Name or dueDate cannot be null'
           })
         }
       }
