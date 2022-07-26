@@ -12,14 +12,15 @@ export const handler = middy(
     const todoId = event.pathParameters.todoId
     // TODO: Return a presigned URL to upload a file for a TODO item with the provided id
     try {
-      const signedUrl = createAttachmentPresignedUrl(todoId);
+      const preSignedUrl = createAttachmentPresignedUrl(todoId);
       return {
         statusCode: 201,
         body: JSON.stringify({
-          uploadUrl: signedUrl
+          uploadUrl: preSignedUrl
         })
       }
     } catch(err) {
+      console.log(`An Error Occured Inside Lambda to get PresignedUrl:: ${(err as Error).message}`)
       return {
         statusCode: 500,
         body: JSON.stringify({

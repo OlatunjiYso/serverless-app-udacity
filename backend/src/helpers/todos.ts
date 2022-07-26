@@ -36,12 +36,12 @@ export async function getTodosForUser(userId:string): Promise<TodoItem[]> {
     return await todosAccess.getUserTodos(userId);
 }
 
-export async function updateTodo(todoUpdateReq: UpdateTodoRequest, todoId:string): Promise<TodoUpdate> {
+export async function updateTodo(todoUpdateReq: UpdateTodoRequest, todoId:string, userId: string): Promise<TodoUpdate> {
     logger.info('Updating a todo')
-return await todosAccess.updateTodo(todoUpdateReq, todoId);
+return await todosAccess.updateTodo(todoUpdateReq, todoId, userId);
 }
 
-export async function deleteTodo(todoId:string) {
+export async function deleteTodo(todoId:string, userId:string) {
     logger.info('Deleting a todo')
-    return await todosAccess.deleteTodo(todoId);
+    return await todosAccess.deleteTodo(todoId, userId);
 }
