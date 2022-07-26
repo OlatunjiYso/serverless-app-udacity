@@ -13,6 +13,15 @@ export const handler = middy(
     const todoId = event.pathParameters.todoId;
     const userId = getUserId(event);
     const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
+    const { name, dueDate, done } = updatedTodo;
+      if(!dueDate || !name || !done) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            message: 'Name or dueDate or done cannot be null'
+          })
+        }
+      }
     // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
     try{
       await updateTodo(updatedTodo, todoId, userId);

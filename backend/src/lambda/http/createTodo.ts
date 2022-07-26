@@ -9,6 +9,15 @@ import { createTodo } from '../../helpers/todos'
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const newTodo: CreateTodoRequest = JSON.parse(event.body)
+    const { name, dueDate } = newTodo;
+      if(!dueDate || !name || name.trim() == '') {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            message: 'Name or dueDate cannot be null'
+          })
+        }
+      }
     // TODO: Implement creating a new TODO item
     try{
       const token = getJwtToken(event);
