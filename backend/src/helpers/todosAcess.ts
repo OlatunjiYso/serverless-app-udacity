@@ -74,12 +74,17 @@ export class TodosAccess {
                 Key: {
                    todoId, userId
               },
-              UpdateExpression : "SET name = :name, dueDate = :dueDate, done = :done ",
+              UpdateExpression : "SET #n = :val_n, #dt = :val_dt, #dn = :val_dn",
                 ExpressionAttributeValues: {
-                  ":name": name,
-                  ":dueDate": dueDate,
-                  ":done": done
+                  ":val_n": name,
+                  ":val_dt": dueDate,
+                  ":val_dn": done
               },
+              ExpressionAttributeNames: {
+                "#n": "name",
+                "#dt": "dueDate",
+                "#dn": "done"
+               },
               ReturnValues: "UPDATED_NEW"
       
               }).promise();
@@ -88,7 +93,6 @@ export class TodosAccess {
           } catch(err) {
             logger.info(`ERROR UPDATING TODO ${(err as Error).message}`)
           }
-        
       }
 }
 
